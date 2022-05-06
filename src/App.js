@@ -5,7 +5,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import { matchRoutes } from 'react-router-dom-v5-compat';
+import { CompatRoute, matchRoutes } from 'react-router-dom-v5-compat';
 
 export default function App() {
   const location = useLocation();
@@ -43,18 +43,18 @@ export default function App() {
 
         <main>
           <Switch location={baseLocation}>
-            <Route exact path="/">
+            <CompatRoute exact path="/">
               <Home />
-            </Route>
-            <Route path="/about">
+            </CompatRoute>
+            <CompatRoute path="/about">
               <About />
-            </Route>
+            </CompatRoute>
           </Switch>
 
           {showingModal && <Switch location={location}>
-            <Route path="/modal">
+            <CompatRoute path="/modal">
               <Modal />
-            </Route>
+            </CompatRoute>
           </Switch>}
         </main>
       </div>
