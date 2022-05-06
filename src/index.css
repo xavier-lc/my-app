@@ -11,3 +11,25 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+html, body, #root, .container, main {
+  height: 100%;
+}
+
+main {
+  position: relative;
+}
+
+.modal {
+  background: rgba(17, 90, 191, 0.7);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0;
+}
+
+.modal h2 {
+  text-align: center;
+}
