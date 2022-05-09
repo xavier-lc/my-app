@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from 'react-router-dom';
 import {
-  Switch,
+  matchRoutes,
   Route,
-  Link
+  Routes,
+  Link,
 } from "react-router-dom";
-import { CompatRoute, matchRoutes } from 'react-router-dom-v5-compat';
 
 export default function App() {
   const location = useLocation();
@@ -23,7 +23,7 @@ export default function App() {
     if (!showingModal) {
       setBaseLocation(location);
     }
-  }, [location, location.pathname]);
+  }, [location, location.pathname, showingModal]);
 
   return (
       <div className='container'>
@@ -42,20 +42,14 @@ export default function App() {
         <hr />
 
         <main>
-          <Switch location={baseLocation}>
-            <CompatRoute exact path="/">
-              <Home />
-            </CompatRoute>
-            <CompatRoute path="/about">
-              <About />
-            </CompatRoute>
-          </Switch>
+          <Routes location={baseLocation}>
+            <Route exact path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+          </Routes>
 
-          {showingModal && <Switch location={location}>
-            <CompatRoute path="/modal">
-              <Modal />
-            </CompatRoute>
-          </Switch>}
+          {showingModal && <Routes location={location}>
+             <Route path="/modal" element={<Modal />} />
+           </Routes>}
         </main>
       </div>
   );

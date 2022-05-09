@@ -5,16 +5,38 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createBrowserHistory } from 'history';
 import { Router } from 'react-router-dom';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+// We need to have access to `history` outside of the `Router` so we can `listen` to it
 const history = createBrowserHistory();
+
+function CustomRouter({
+  basename,
+  children,
+  history,
+}) {
+  let [state, setState] = React.useState({
+    action: history.action,
+    location: history.location,
+  });
+
+  React.useLayoutEffect(() => history.listen(setState), [history]);
+
+  return (
+    <Router
+      basename={basename}
+      children={children}
+      location={state.location}
+      navigationType={state.action}
+      navigator={history}
+    />
+  );
+}
+
 root.render(
-  <Router history={history}>
-    <CompatRouter>
-      <App />
-    </CompatRouter>
-  </Router>
+  <CustomRouter history={history}>
+    <App />
+  </CustomRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
